@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/david/Desktop/python/my_projects/ianscript'
+let g:netrw_dirhist_2='/home/david/Desktop/python/my_projects/insulater/insulater'
+let g:netrw_dirhist_3='/home/david/Desktop/python/my_projects/insulater'
+let g:netrw_dirhist_4='/home/david/Desktop/python/my_projects'
+let g:netrw_dirhist_5='/home/david/Desktop/python/my_projects/insulater/insulater'
+let g:netrw_dirhist_6='/home/david/Desktop/python/my_projects/insulater'
+let g:netrw_dirhist_7='/home/david/Desktop/python/my_projects'
+let g:netrw_dirhist_8='/home/david/Desktop/python'
+let g:netrw_dirhist_9='/home/david/Desktop/python/my_projects/gotoTests'
