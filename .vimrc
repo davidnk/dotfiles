@@ -6,39 +6,52 @@ set tabstop=2
 set shiftwidth=2
 set backspace=2
 set smarttab
-set expandtab                   " expand <Tab>s with spaces; death to
-" keeps highlight for < and >
-vnoremap < <gv
-vnoremap > >gv
-set shiftround                  " always round indents to multiple of 
+set expandtab                 " expand <Tab>s with spaces; death to
+set shiftround                " always round indents to multiple of 
 "set mouse=a
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
 set undolevels=1000           " 1000 undos
 set ignorecase                " search ignoring case
 set hlsearch
 set smartcase                 "unless you use uppercase
-set hidden          " Let us move between buffers without writing them
-set laststatus=2
-hi StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
+set hidden                    " Let us move between buffers without writing them
 set foldmethod=indent
 set foldnestmax=6
 set foldlevelstart=20
-nnoremap f za
-hi Folded term=standout ctermfg=none ctermbg=black
-if ! has("gui_running") 
-      set t_Co=256 
-endif 
-" feel free to choose :set background=light for a different style 
-set background=dark 
-nnoremap w <C-w>
+set nowrap                    " Disable Line Wrap
 set wildignore=*.o,*.obj,*.bak,*.exe,*.a,*.dep
+set laststatus=2
+set t_Co=256                  " Bad in gvim
+set background=dark 
+hi Folded term=standout ctermfg=none ctermbg=black
+hi StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
 
-" Resise buffer views up and down
-nnoremap + <c-w>+
-nnoremap _ <c-w><S-->
+" Highlight lines longer than 80 chars
+autocmd! BufWinEnter *.php,*.cpp,*.c,*.h,*.java,*.lua,*.js,TARGETS let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+autocmd! BufWinEnter *.py let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
 
-" Disable Line Wrap
-set nowrap
+function! SetupVimMaps()
+  "c-l to save
+  nmap <c-l> :w<CR>
+  imap <c-l> <Esc>:w<CR>a
+
+  "c-i to esc from insert mode
+  imap <c-i> <Esc>
+
+  " keeps highlight for < and >
+  vnoremap < <gv
+  vnoremap > >gv
+
+  " folding
+  nnoremap f za
+  " feel free to choose :set background=light for a different style 
+  nnoremap w <C-w>
+
+  " Resise buffer views up and down
+  nnoremap + <c-w>+
+  nnoremap _ <c-w><S-->
+endfunction
+autocmd VimEnter * call SetupVimMaps()
 
 " Python Specific Settings
 function! DoPythonSettings()
@@ -52,38 +65,38 @@ function! DoPythonSettings()
 endfunction
 autocmd BufEnter *.py call DoPythonSettings()
 
-" Highlight lines longer than 80 chars
-autocmd! BufWinEnter *.php,*.cpp,*.c,*.h,*.java,*.lua,*.js,TARGETS let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-autocmd! BufWinEnter *.py let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
+function! SetupVimPlugins()
+  " pathogen
+  " =====================
+  execute pathogen#infect()
 
+  map T <Esc>:ConqueTerm bash<CR>
 
-" pathogen
-" =====================
-execute pathogen#infect()
+  filetype plugin on
+  set shellslash
+  set grepprg=grep\ -nH\ $*
+  filetype indent on
+  let g:tex_flavor='latex'
 
-noremap <c-s> <c-o>:w<cr>
-map T <Esc>:ConqueTerm bash<CR>
+  " flake8
+  " =====================
+  let g:flake8_max_line_length=99
+  autocmd BufWritePost *.py call Flake8()
 
-filetype plugin on
-set shellslash
-set grepprg=grep\ -nH\ $*
-filetype indent on
-let g:tex_flavor='latex'
+  " vim-python-pep8-indent
+  " =====================
+  let g:pymode_indent = 0
 
-" flake8
-" =====================
-let g:flake8_max_line_length=99
-autocmd BufWritePost *.py call Flake8()
-
-" vim-python-pep8-indent
-" =====================
-let g:pymode_indent = 0
-
-" Settings for jedi-vim
-" =====================
-let g:jedi#usages_command = "<leader>n"
-"let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#use_splits_not_buffers = "left"
-
-
+  " Settings for jedi-vim
+  " =====================
+  let g:jedi#goto_assignments_command = "<leader>g"
+  let g:jedi#goto_definitions_command = "<leader>d"
+  let g:jedi#documentation_command = "K"
+  let g:jedi#usages_command = "<leader>n"
+  let g:jedi#completions_command = "<Tab>"
+  let g:jedi#rename_command = "<leader>r"
+  let g:jedi#popup_on_dot = 0
+  let g:jedi#popup_select_first = 0
+  let g:jedi#use_splits_not_buffers = "left"
+endfunction
+call SetupVimPlugins()
