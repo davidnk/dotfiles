@@ -47,9 +47,6 @@ function! SetupVimMaps()
   nmap <c-l> :w<CR>
   imap <c-l> <Esc>:w<CR>a
 
-  "c-i to esc from insert mode
-  imap <c-i> <Esc>
-
   " J, K to PageUp, PageDown
   nmap J <PAGEDOWN>
   nmap K <PAGEUP>
@@ -72,7 +69,6 @@ function! SetupVimMaps()
   nnoremap _ <c-w><S-->
 endfunction
 call SetupVimMaps()
-autocmd VimEnter * call SetupVimMaps()
 
 " Python Specific Settings
 function! DoPythonSettings()
