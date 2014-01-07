@@ -43,8 +43,7 @@ function! SetupVimMaps()
   vnoremap > >gv
 
   " folding
-  nnoremap f za
-  " feel free to choose :set background=light for a different style 
+  nnoremap <Space> za
   nnoremap w <C-w>
 
   " Resise buffer views up and down
