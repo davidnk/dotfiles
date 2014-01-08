@@ -42,27 +42,50 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 
+" Open files to same line as last opened in vim
+" If it doesn't work try: sudo chown user:group ~/.viminfo
+"    with user and group often being your username
+autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$")
+      \| exe "normal! g`\"" | endif
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
 function! SetupVimMaps()
+  " Use jk as <Esc> in insert mode
+  inoremap jk <Esc>
+
   "c-l to save
-  nmap <c-l> :w<CR>
-  imap <c-l> <Esc>:w<CR>a
+  nnoremap <c-l> :w<CR>
+  "save and exit insert mode.  add 'a' at end to stay in insert
+  inoremap <c-l> <Esc>:w<CR>
+  inoremap jkl <Esc>:w<CR>
+
+  " Use <S-CR> in insert mode to start inserting on next line.
+  inoremap <S-CR> <Esc>o
+
+  " <line> <Enter> goes to line and centers screen
+  nnoremap <Enter> G
 
   " J, K to PageUp, PageDown
-  nmap J <PAGEDOWN>
-  nmap K <PAGEUP>
+  nnoremap J <PAGEDOWN>
+  nnoremap K <PAGEUP>
 
+  " Instead move once and use . to do more and u to undo
   " keeps highlight for < and >
-  vnoremap < <gv
-  vnoremap > >gv
+  "vnoremap < <gv
+  "vnoremap > >gv
 
   " folding
-  nnoremap <Space> za
+  nnoremap gg za
 
   " windows
   nnoremap w <C-w>
-
-  " <line> <Enter> goes to line
-  nmap <Enter> gg
 
   " Resise buffer views up and down
   nnoremap + <c-w>+
@@ -86,8 +109,9 @@ function! SetupVimPlugins()
   " pathogen
   " =====================
   execute pathogen#infect()
+  map go <c-p>
 
-  map T <Esc>:ConqueTerm bash<CR>
+  "map T <Esc>:ConqueTerm bash<CR>
 
   filetype plugin on
   set shellslash
