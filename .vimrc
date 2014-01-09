@@ -24,6 +24,7 @@ set nowrap                    " Disable Line Wrap
 set wildignore=*.o,*.obj,*.bak,*.exe,*.a,*.dep
 set laststatus=2
 set t_Co=256                  " Bad in gvim
+set pastetoggle=<F2>
 set background=dark
 set ff=unix                   " Set line endings
 set scrolloff=5               " Min lines above/below the cursor
@@ -66,6 +67,7 @@ function! SetupVimMaps()
   inoremap <c-l> <Esc>:w<CR>
   inoremap jkl <Esc>:w<CR>
 
+  " TODO: get working
   " Use <S-CR> in insert mode to start inserting on next line.
   inoremap <S-CR> <Esc>o
 
