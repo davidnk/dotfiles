@@ -1,0 +1,68 @@
+http://www.8t8.us/vim/vim.html
+http://www.cmrr.umn.edu/~strupp/vim-3.0.refcard.html
+ideavim.sourceforge.net/vim/‎
+http://vimdoc.sourceforge.net/htmldoc/autocmd.html
+
+pathogen.vim
+vim-flake8
+vim-pyunit
+jedi-vim
+ctrlp.vim                                            "fuzzy file opening
+vim-multiple-cursors
+
+vim script
+:h - help
+:h cursor-motions
+:h .
+:e $VIMRUNTIME     - maybe worth looking at
+<Space> and <Tab> can be command keys in normal/visual mode
+   Maybe try something else for tab in insert mode
+   Note: <c-i> is equal to <Tab> in terminal
+<leader> key is \ in vimrc
+ga - show character encoding
+gi - insert in last cursor location
+gn - highlights next find
+gd - same as * starting at top
+gf - goto file of text under cursor
+gg - go to line N  .  default to 0.  14gg is :14
+gm - to middle of screen horizontally
+gq - move line after other line
+
+di( or di) - delete inside ()
+da( - delete around ().  same as inside including ()
+dip - delete inside paragraph
+yiw - yank in word
+% - goes to earlier pair () if inside.  goes to other if on ( or )
+c-v - block select.  for vertical selecting
+
+c-E  c-Y  - shift screen up or down without moving cursor
+zz, zt, zb - shift screen so cursor is in middle, top, bottom
+ZZ - save and quit
+f + <character> - move to next <character> on current line
+t + <character> - move to before <character> on current line
+; - repeat last f or t command
+, - repeat in other direction
+. - repeat last change
+m<char> - set mark
+'<char> - go to mark
+c-o - goes previous cursor location
+c-i - goes to next cursor location
+g; and g, - jump around change list
+
+Tabbed interface -  :tabnew      gt   gT
+:mksession sessionName.vim
+vim -S sessionName.vim
+argument list - can be used to do stuff across multiple files such as find/replace or macros
+         :args            :argsdo
+:%s//repace/g             will find and replace using previous /word
+%s/.../.../gc      will prompt at each replace
+http://vim.wikia.com/wiki/Replace_a_word_with_yanked_text
+registers
+     :reg
+     :/C-r <reg name>
+     "<reg name>dd    would cut into register
+c-r from insert - insert expression
+http://stackoverflow.com/questions/509690/how-can-you-list-the-matches-of-vims-search
+:vimgrep example %      :copen     :cn    :cp
+x commands:
+  :10,20m30    - moves lines 10-20 to line 30
