@@ -1,0 +1,36 @@
+http://www.emacswiki.org/emacs/MovingTheCtrlKey
+http://www.cs.usfca.edu/~parrt/course/601/lectures/unix.util.html
+http://kkovacs.eu/cool-but-obscure-unix-tools
+
+Capslock to Ctrl
+consider Tab to Esc... use Ctrl-i for tab
+
+C-?  # clears current command
+C-l   # clear
+
+apropos <word>         find tools with <word> in their descriptions
+
+backtick is used to put output as args
+cat `ls`
+
+multitail           for viewing multiple log files
+awk      for files with columns.  pattern {action}
+find -exec
+sed       find replace
+pipe is to use output of first as input of second
+echo 'ls' | bash -s
+ps aux | grep proc_name
+
+redirection: http://www.tldp.org/LDP/abs/html/io-redirection.html
+> to send output to file.  2>  .   /dev/null
+>> appends output to file
+< use file as input
+
+use    /etc/rc.local      to run something at startup
+or place script in /etc/init.d  && ln -s /etc/init.d/myscript /etc/rc3.d/S99myscript
+cron also has an at reboot schedule
+
+rsync -Pravdtze ssh
+rsyncrypto
+
+ssh user@host '<command to run>'
