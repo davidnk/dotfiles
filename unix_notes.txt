@@ -20,6 +20,7 @@ sed       find replace
 pipe is to use output of first as input of second
 echo 'ls' | bash -s
 ps aux | grep proc_name
+inxi -Fx      displays information
 
 redirection: http://www.tldp.org/LDP/abs/html/io-redirection.html
 > to send output to file.  2>  .   /dev/null

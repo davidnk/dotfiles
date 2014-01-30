@@ -66,3 +66,13 @@ http://stackoverflow.com/questions/509690/how-can-you-list-the-matches-of-vims-s
 :vimgrep example %      :copen     :cn    :cp
 x commands:
   :10,20m30    - moves lines 10-20 to line 30
+
+Insert Mode:
+c-t     Insert tab at start of line
+c-d     Remove tab from start of line
+c-u     Removes inserted characters from line
+c-a     Inserts previously inserted text
+c-x     Goes into an insert sub-mode
+c-g
+c-o
+

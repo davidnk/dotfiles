@@ -65,18 +65,17 @@ function! SetupVimMaps()
   nnoremap <c-l> :w<CR>
   "save and exit insert mode.  add 'a' at end to stay in insert
   inoremap <c-l> <Esc>:w<CR>
-  inoremap jkl <Esc>:w<CR>
+  "inoremap jkl <Esc>:w<CR>
 
-  " TODO: get working
-  " Use <S-CR> in insert mode to start inserting on next line.
-  inoremap <S-CR> <Esc>o
-
-  " <line> <Enter> goes to line and centers screen
-  nnoremap <Enter> G
+  " Use <Leader><Enter> in insert mode to start inserting on next line.
+  inoremap <Leader><CR> <Esc>o
 
   " J, K to PageUp, PageDown
-  nnoremap J <PAGEDOWN>
-  nnoremap K <PAGEUP>
+  noremap J <PAGEDOWN>
+  noremap K <PAGEUP>
+  " H, L to Home, End
+  noremap H 0
+  noremap L $
 
   " Instead move once and use . to do more and u to undo
   " keeps highlight for < and >
@@ -84,7 +83,7 @@ function! SetupVimMaps()
   "vnoremap > >gv
 
   " folding
-  nnoremap gg za
+  nnoremap <Space><Space> za
 
   " windows
   nnoremap w <C-w>
@@ -124,7 +123,7 @@ function! SetupVimPlugins()
   " flake8
   " =====================
   let g:flake8_max_line_length=99
-  autocmd BufWritePost *.py call Flake8()
+  "autocmd BufWritePost *.py call Flake8()
 
   " vim-python-pep8-indent
   " =====================
@@ -136,7 +135,7 @@ function! SetupVimPlugins()
   let g:jedi#goto_definitions_command = "<leader>d"
   let g:jedi#documentation_command = "<leader>k"
   let g:jedi#usages_command = "<leader>n"
-  let g:jedi#completions_command = ""
+  let g:jedi#completions_command = "<C-Space>"
   let g:jedi#rename_command = "<leader>r"
   let g:jedi#popup_on_dot = 0
   let g:jedi#popup_select_first = 0
