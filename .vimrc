@@ -58,8 +58,11 @@ if !exists(":DiffOrig")
 endif
 
 function! SetupVimMaps()
-  " Use jk as <Esc> in insert mode
-  inoremap jk <Esc>
+  " Use jk as <Esc>l in insert mode
+  inoremap jk <Esc>l
+
+  " Use jj as paste in insert mode
+  inoremap jj <Esc>pa
 
   "c-l to save
   nnoremap <c-l> :w<CR>
