@@ -35,3 +35,11 @@ rsync -Pravdtze ssh
 rsyncrypto
 
 ssh user@host '<command to run>'
+
+lsblk
+lsusb
+dmesg | tail -20
+ls -l /dev/disk/by-label/
+udisks --mount /dev/sdb1
+udisks --unmount /dev/sdb1
+udisks --detach /dev/sdb
