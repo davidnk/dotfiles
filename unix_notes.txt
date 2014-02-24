@@ -43,3 +43,5 @@ ls -l /dev/disk/by-label/
 udisks --mount /dev/sdb1
 udisks --unmount /dev/sdb1
 udisks --detach /dev/sdb
+
+sudo iwlist wlan0 scan

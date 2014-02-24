@@ -1,4 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/david/Desktop/Classes/cmsc425/OpenGLSamples/OpenGL-3D-Sample/OpenGL-3D-Sample-ForC++'
-let g:netrw_dirhist_2='/home/david/Desktop/Classes/cmsc425/OpenGLSamples/OpenGL-3D-Sample/OpenGL-3D-Sample-ForC++/OpenGL-3D-Sample-ForC++'

@@ -1,0 +1,10 @@
+sudo aptitude install vim-gnome
+sudo pip install jedi flake8 nose vim_bridge mock
+
+
+Details:
+
+:ver should have +python.   sudo aptitude install vim-gnome    or   vim-nox
+jedi-vim:  pip install jedi
+vim-flake8:  pip install flake8
+vim-pyunit:  pip install nose vim_bridge mock
