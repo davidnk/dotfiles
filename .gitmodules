@@ -1,0 +1,21 @@
+[submodule "jedi-vim"]
+    path = .vim/bundle/jedi-vim
+    url = https://github.com/davidhalter/jedi-vim.git
+[submodule "vim-flake8"]
+    path = .vim/bundle/vim-flake8
+    url = https://github.com/nvie/vim-flake8.git
+[submodule "vim-python-pep8-indent"]
+    path = .vim/bundle/vim-python-pep8-indent
+    url = https://github.com/hynek/vim-python-pep8-indent.git
+[submodule "ctrlp.vim"]
+    path = .vim/bundle/ctrlp.vim
+    url = https://github.com/kien/ctrlp.vim.git
+[submodule "supertab"]
+    path = .vim/bundle/supertab
+    url = https://github.com/ervandew/supertab.git
+[submodule "vim-multiple-cursors"]
+    path = .vim/bundle/vim-multiple-cursors
+    url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "vim-pyunit"]
+    path = .vim/bundle/vim-pyunit
+    url = https://github.com/nvie/vim-pyunit.git
