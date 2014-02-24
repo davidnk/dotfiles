@@ -1,3 +1,4 @@
+git submodule update --init --recursive
 sudo aptitude install vim-gnome
 sudo pip install jedi flake8 nose vim_bridge mock
 
