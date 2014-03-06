@@ -29,6 +29,9 @@ set background=dark
 set ff=unix                   " Set line endings
 set scrolloff=5               " Min lines above/below the cursor
 set directory=/tmp            " Set directory for swp files
+set mps+=<:>
+set relativenumber
+set number
 syntax on
 hi Folded term=standout ctermfg=none ctermbg=black
 hi StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey

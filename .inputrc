@@ -1,0 +1,7 @@
+# bind -P
+set editing-mode vi
+set keymap vi-command
+"H": beginning-of-line
+"L": end-of-line
+set keymap vi-insert
+Control-l clear-screen
