@@ -145,5 +145,10 @@ function! SetupVimPlugins()
   let g:jedi#popup_on_dot = 0
   let g:jedi#popup_select_first = 0
   let g:jedi#use_splits_not_buffers = "left"
+
+  " Settings for vim-easymotion
+  " =====================
+  nmap <Space>f <Plug>(easymotion-s)
+  let g:EasyMotion_smartcase = 1
 endfunction
 call SetupVimPlugins()

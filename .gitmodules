@@ -19,3 +19,6 @@
 [submodule "vim-pyunit"]
     path = .vim/bundle/vim-pyunit
     url = https://github.com/nvie/vim-pyunit.git
+[submodule ".vim/bundle/vim-easymotion"]
+	path = .vim/bundle/vim-easymotion
+	url = git://github.com/Lokaltog/vim-easymotion.git
