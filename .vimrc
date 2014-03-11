@@ -148,8 +148,8 @@ function! SetupVimPlugins()
 
   " Settings for vim-easymotion
   " =====================
-  nmap <Space>f <Plug>(easymotion-s)
-  vmap <Space>f <Plug>(easymotion-s)
+  nmap s <Plug>(easymotion-s)
+  vmap s <Plug>(easymotion-s)
   imap jf <C-o><Plug>(easymotion-s)
   let g:EasyMotion_smartcase = 1
   command! E Explore
