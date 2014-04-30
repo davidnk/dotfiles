@@ -84,6 +84,8 @@ function! SetupVimMaps()
   noremap H 0
   noremap L $
 
+  noremap <Enter> gg
+
   " Instead move once and use . to do more and u to undo
   " keeps highlight for < and >
   "vnoremap < <gv
@@ -112,6 +114,7 @@ function! DoPythonSettings()
   set foldlevelstart=20
 endfunction
 autocmd BufEnter *.py call DoPythonSettings()
+autocmd BufEnter *.java call DoPythonSettings()
 
 function! SetupVimPlugins()
   " pathogen
@@ -148,8 +151,8 @@ function! SetupVimPlugins()
 
   " Settings for vim-easymotion
   " =====================
-  nmap s <Plug>(easymotion-s)
-  vmap s <Plug>(easymotion-s)
+  nmap <Space>f <Plug>(easymotion-s)
+  vmap <Space>f <Plug>(easymotion-s)
   imap jf <C-o><Plug>(easymotion-s)
   let g:EasyMotion_smartcase = 1
   command! E Explore
