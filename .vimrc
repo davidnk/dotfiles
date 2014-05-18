@@ -33,13 +33,17 @@ set mps+=<:>
 set relativenumber
 set number
 set clipboard=unnamedplus
+set tags=./tags;
+filetype plugin indent on
 syntax on
-hi Folded term=standout ctermfg=none ctermbg=black
-hi StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
+highlight Folded term=standout ctermfg=none ctermbg=black
+highlight StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
+highlight Visual term=reverse cterm=reverse guibg=Grey
+highlight Search term=reverse cterm=reverse ctermbg=None ctermfg=blue
 
 " Highlight lines longer than 80 chars
-autocmd! BufWinEnter *.php,*.cpp,*.c,*.h,*.java,*.lua,*.js,TARGETS let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-autocmd! BufWinEnter *.py let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
+"autocmd! BufWinEnter *.php,*.cpp,*.c,*.h,*.java,*.lua,*.js,TARGETS let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+"autocmd! BufWinEnter *.py let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=lightgrey guibg=lightgrey
@@ -87,6 +91,7 @@ function! SetupVimMaps()
 
   noremap <Enter> gg
 
+  " DEPRECIATED use . to repeat tab changes
   " Instead move once and use . to do more and u to undo
   " keeps highlight for < and >
   "vnoremap < <gv
@@ -121,13 +126,15 @@ function! SetupVimPlugins()
   " pathogen
   " =====================
   execute pathogen#infect()
+
+  " ctrlp
   map go <c-p>
 
-  filetype plugin on
-  set shellslash
-  set grepprg=grep\ -nH\ $*
-  filetype indent on
-  let g:tex_flavor='latex'
+  "filetype plugin on
+  "set shellslash
+  "set grepprg=grep\ -nH\ $*
+  "filetype indent on
+  "let g:tex_flavor='latex'
 
   " flake8
   " =====================
@@ -149,6 +156,13 @@ function! SetupVimPlugins()
   let g:jedi#popup_on_dot = 0
   let g:jedi#popup_select_first = 0
   let g:jedi#use_splits_not_buffers = "left"
+
+  " Settings for eclim
+  " =====================
+  inoremap <C-n> <C-x><C-u>
+  nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
+  nnoremap g<Enter> gf
+  let g:EclimJavaSearchSingleResult = 'tabnew'
 
   " Settings for vim-easymotion
   " =====================
