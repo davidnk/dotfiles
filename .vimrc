@@ -32,6 +32,7 @@ set directory=/tmp            " Set directory for swp files
 set mps+=<:>
 set relativenumber
 set number
+set clipboard=unnamedplus
 syntax on
 hi Folded term=standout ctermfg=none ctermbg=black
 hi StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey

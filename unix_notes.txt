@@ -9,6 +9,7 @@ C-?  # clears current command
 C-l   # clear
 
 apropos <word>         find tools with <word> in their descriptions
+bro    like man but examples.  http://bropages.org/  install ruby then 'gem install bropages'
 
 backtick is used to put output as args
 cat `ls`
