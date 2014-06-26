@@ -12,6 +12,7 @@ apropos <word>         find tools with <word> in their descriptions
 
 backtick is used to put output as args
 cat `ls`
+cat $(ls)
 
 multitail           for viewing multiple log files
 awk      for files with columns.  pattern {action}
