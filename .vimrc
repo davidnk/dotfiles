@@ -89,7 +89,7 @@ function! SetupVimMaps()
   noremap H 0
   noremap L $
 
-  noremap <Enter> gg
+  "noremap <Enter> gg
 
   " DEPRECIATED use . to repeat tab changes
   " Instead move once and use . to do more and u to undo
@@ -103,11 +103,53 @@ function! SetupVimMaps()
   " windows
   nnoremap w <C-w>
 
+  " tabs
+  " gt / gT to change tabs
+  nnoremap <Space>t :tab split<CR>
+  nnoremap <C-t> :tabnew<CR>
+  " wt moves window into tab
+  nnoremap wt <C-w>T
+
+  " q
+  nnoremap <Space>q :q<CR>
+  nnoremap <Space>Q :mksession ~/vim_sessions/prev_closed.vim<CR>:qa<CR>
+
   " Resise buffer views up and down
   nnoremap + <c-w>+
   nnoremap _ <c-w><S-->
 endfunction
 call SetupVimMaps()
+
+" preserves cursor position between buffer changes
+if v:version >= 700
+  au BufLeave * let b:winview = winsaveview()
+  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+endif
+
+function! GotoThing()
+  let curent_filename = expand('%:p')
+  try
+    try
+      "open file at line
+      normal! gF
+    catch /^Vim\%((\a\+)\)\=:E447/
+      " go to definition
+      try
+        execute "normal \<c-]>"
+      catch
+        normal! gd
+      endtry
+    endtry
+  catch
+  endtry
+  if curent_filename != expand('%:p')
+    "b #
+    "tab split
+    "b #
+  endif
+  unlet curent_filename
+endfunction
+nnoremap <Enter> :call GotoThing()<CR>
 
 " Python Specific Settings
 function! DoPythonSettings()
@@ -128,6 +170,8 @@ function! SetupVimPlugins()
   execute pathogen#infect()
 
   " ctrlp
+  let g:ctrlp_max_files=0
+  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.jar
   map go <c-p>
 
   "filetype plugin on
@@ -161,7 +205,6 @@ function! SetupVimPlugins()
   " =====================
   inoremap <C-n> <C-x><C-u>
   nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
-  nnoremap g<Enter> gf
   let g:EclimJavaSearchSingleResult = 'tabnew'
 
   " Settings for vim-easymotion

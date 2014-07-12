@@ -47,3 +47,5 @@ udisks --unmount /dev/sdb1
 udisks --detach /dev/sdb
 
 sudo iwlist wlan0 scan
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@host
+ssh-keygen -t rsa
