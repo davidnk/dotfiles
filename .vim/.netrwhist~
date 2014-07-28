@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/dkaresh/Documents/pgdev/pg/gotham/PGServer/server-src/com/palantir/nexus/db/session'
+let g:netrw_dirhist_2='/home/dkaresh/Documents/pgdev/pg/gotham/PGBuild/bin/unix'
+let g:netrw_dirhist_3='/home/dkaresh/Documents/pgdev/pg/gotham/PGShared/shared-src/com/palantir/livereindex'

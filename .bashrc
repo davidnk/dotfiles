@@ -58,13 +58,22 @@ complete -F _autocomplete_tmux_attach ta
 
 vim-session() {
   if [ -z "$1" ]; then
-    ls -1 ~/vim_sessions/
+    ls -1 ~/.vim/vim_sessions/
   else
-    vim -S ~/vim_sessions/$1*
+    vim -S ~/.vim/vim_sessions/$1*
   fi
 }
-complete vim-session # tab completion
-alias vs=vim-session
+_autocomplete_vim_session() {
+    local cur opts
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    opts=$(ls -1 ~/.vim/vim_sessions/ | awk '{print $1}' | sed 's/://g' | xargs)
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+}
+complete -F _autocomplete_vim_session vim-session
+alias v=vim-session
+complete -F _autocomplete_vim_session v
+
+alias index='sh ~/cscope_gen.sh & ctags -R . &'
 
 alias pg='cd /home/dkaresh/Documents/pgdev/'
 alias pg2='cd /home/dkaresh/Documents/pgdev2/'
@@ -81,6 +90,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+export PS1='\w$ '
 
 export JAVA_HOME=/usr/lib/jvm/jre1.7.0_60
 

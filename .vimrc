@@ -1,3 +1,5 @@
+source ~/cscope_maps.vim
+
 " ':source ~/.vimrc' to reload
 set nu
 set ruler
@@ -27,13 +29,14 @@ set t_Co=256                  " Bad in gvim
 set pastetoggle=<F2>
 set background=dark
 set ff=unix                   " Set line endings
-set scrolloff=5               " Min lines above/below the cursor
+"set scrolloff=5               " Min lines above/below the cursor
 set directory=/tmp            " Set directory for swp files
 set mps+=<:>
 set relativenumber
 set number
 set clipboard=unnamedplus
 set tags=./tags;
+set ttimeout timeoutlen=300 ttimeoutlen=100  "1/3 second between keys
 filetype plugin indent on
 syntax on
 highlight Folded term=standout ctermfg=none ctermbg=black
@@ -47,15 +50,15 @@ highlight Search term=reverse cterm=reverse ctermbg=None ctermfg=blue
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=lightgrey guibg=lightgrey
-autocmd ColorScheme * highlight ExtraWhitespace guibg=lightgrey
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd! ColorScheme * highlight ExtraWhitespace guibg=lightgrey
+autocmd! BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd! InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd! InsertLeave * match ExtraWhiteSpace /\s\+$/
 
 " Open files to same line as last opened in vim
 " If it doesn't work try: sudo chown user:group ~/.viminfo
 "    with user and group often being your username
-autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$")
+autocmd! BufRead * if line("'\"") > 0 && line("'\"") <= line("$")
       \| exe "normal! g`\"" | endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -65,6 +68,45 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
+
+" preserves cursor position between buffer changes
+"if v:version >= 700
+"  au BufLeave * let b:winview = winsaveview()
+"  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+"endif
+
+function! ScratchBuffer()
+  enew
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
+endfunction
+
+function! GotoDef()
+  let curent_filename = expand('%:p')
+  set nocscopetag
+  try
+    try
+      "open file at line
+      normal! gF
+    catch /^Vim\%((\a\+)\)\=:E447/
+      " go to definition
+      try
+        execute "normal \<c-]>"
+      catch
+        normal! gd
+      endtry
+    endtry
+  catch
+  endtry
+  if curent_filename != expand('%:p')
+    "b #
+    "tab split
+    "b #
+  endif
+  unlet curent_filename
+  set cscopetag
+endfunction
 
 function! SetupVimMaps()
   " Use jk as <Esc>l in insert mode
@@ -88,14 +130,9 @@ function! SetupVimMaps()
   " H, L to Home, End
   noremap H 0
   noremap L $
-
-  "noremap <Enter> gg
-
-  " DEPRECIATED use . to repeat tab changes
-  " Instead move once and use . to do more and u to undo
-  " keeps highlight for < and >
-  "vnoremap < <gv
-  "vnoremap > >gv
+  " Graphical left/right
+  noremap gh g0
+  noremap gl g$
 
   " folding
   nnoremap <Space><Space> za
@@ -104,52 +141,31 @@ function! SetupVimMaps()
   nnoremap w <C-w>
 
   " tabs
-  " gt / gT to change tabs
   nnoremap <Space>t :tab split<CR>
   nnoremap <C-t> :tabnew<CR>
   " wt moves window into tab
   nnoremap wt <C-w>T
+  " t / T to change tabs
+  nnoremap t gt
+  nnoremap T gT
 
   " q
   nnoremap <Space>q :q<CR>
-  nnoremap <Space>Q :mksession ~/vim_sessions/prev_closed.vim<CR>:qa<CR>
+  nnoremap <Space>Q :mksession! ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
+
+  nnoremap ; :
 
   " Resise buffer views up and down
   nnoremap + <c-w>+
   nnoremap _ <c-w><S-->
+
+  " goto stuff under cursor
+  nnoremap <Enter> :call GotoDef()<CR>
+  "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_references.py <C-r>z<CR>
+  nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_children.py <C-r>z<CR>
+  "cscope_maps.vim for more maps
 endfunction
 call SetupVimMaps()
-
-" preserves cursor position between buffer changes
-if v:version >= 700
-  au BufLeave * let b:winview = winsaveview()
-  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
-endif
-
-function! GotoThing()
-  let curent_filename = expand('%:p')
-  try
-    try
-      "open file at line
-      normal! gF
-    catch /^Vim\%((\a\+)\)\=:E447/
-      " go to definition
-      try
-        execute "normal \<c-]>"
-      catch
-        normal! gd
-      endtry
-    endtry
-  catch
-  endtry
-  if curent_filename != expand('%:p')
-    "b #
-    "tab split
-    "b #
-  endif
-  unlet curent_filename
-endfunction
-nnoremap <Enter> :call GotoThing()<CR>
 
 " Python Specific Settings
 function! DoPythonSettings()
@@ -161,8 +177,8 @@ function! DoPythonSettings()
   set foldnestmax=6
   set foldlevelstart=20
 endfunction
-autocmd BufEnter *.py call DoPythonSettings()
-autocmd BufEnter *.java call DoPythonSettings()
+autocmd! BufEnter *.py call DoPythonSettings()
+autocmd! BufEnter *.java call DoPythonSettings()
 
 function! SetupVimPlugins()
   " pathogen
@@ -183,7 +199,7 @@ function! SetupVimPlugins()
   " flake8
   " =====================
   let g:flake8_max_line_length=99
-  "autocmd BufWritePost *.py call Flake8()
+  "autocmd! BufWritePost *.py call Flake8()
 
   " vim-python-pep8-indent
   " =====================
@@ -203,14 +219,13 @@ function! SetupVimPlugins()
 
   " Settings for eclim
   " =====================
-  inoremap <C-n> <C-x><C-u>
-  nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
-  let g:EclimJavaSearchSingleResult = 'tabnew'
+  "inoremap <C-n> <C-x><C-u>
+  "nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
+  "let g:EclimJavaSearchSingleResult = 'tabnew'
 
   " Settings for vim-easymotion
   " =====================
-  nmap <Space>f <Plug>(easymotion-s)
-  vmap <Space>f <Plug>(easymotion-s)
+  map f <Plug>(easymotion-s)
   imap jf <C-o><Plug>(easymotion-s)
   let g:EasyMotion_smartcase = 1
   command! E Explore
