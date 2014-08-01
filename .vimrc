@@ -1,4 +1,4 @@
-source ~/cscope_maps.vim
+source ~/.vim/cscope_maps.vim
 
 " ':source ~/.vimrc' to reload
 set nu
