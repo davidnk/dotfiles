@@ -73,15 +73,7 @@ complete -F _autocomplete_vim_session vim-session
 alias v=vim-session
 complete -F _autocomplete_vim_session v
 
-alias index='sh ~/cscope_gen.sh & ctags -R . &'
-
-alias pg='cd /home/dkaresh/Documents/pgdev/'
-alias pg2='cd /home/dkaresh/Documents/pgdev2/'
-alias pg3='cd /home/dkaresh/Documents/pgdev3/'
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+alias index='sh ~/cscope_gen.sh && ctags -R .'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -92,13 +84,9 @@ fi
 
 export PS1='\w$ '
 
-export JAVA_HOME=/usr/lib/jvm/jre1.7.0_60
-
-# Make sure it finds the VPN yo!
-PATH=$PATH:/opt/vpn:/opt/vagrant/bin
-
-# PATH stuff
-PATH=$PATH:/home/dkaresh/tools/trails/bin/unix
+if [ -f ~/.bash_local_aliases ]; then
+    . ~/.bash_local_aliases
+fi
 
 # Load mtime at bash start-up
 #echo "bashrc mtime: $(stat -c "%Z" ~/.bashrc)" >&2
