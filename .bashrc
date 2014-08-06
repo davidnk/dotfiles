@@ -84,8 +84,8 @@ fi
 
 export PS1='\w$ '
 
-if [ -f ~/.bash_local_aliases ]; then
-    . ~/.bash_local_aliases
+if [ -f ~/.bashrc_local_stuff ]; then
+    . ~/.bashrc_local_stuff
 fi
 
 # Load mtime at bash start-up
