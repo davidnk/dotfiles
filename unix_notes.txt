@@ -49,3 +49,8 @@ udisks --detach /dev/sdb
 sudo iwlist wlan0 scan
 ssh-copy-id -i ~/.ssh/id_rsa.pub user@host
 ssh-keygen -t rsa
+
+To allow java gui's to work from awesomewm:
+  see https://awesome.naquadah.org/wiki/Problems_with_Java
+
+https://github.com/Russell91/sshrc

@@ -151,9 +151,12 @@ function! SetupVimMaps()
 
   " q
   nnoremap <Space>q :q<CR>
-  nnoremap <Space>Q :mksession! ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
+  nnoremap Q :Obsession ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
 
-  nnoremap ; :
+  nnoremap <Space>s :Obsession ~/.vim/vim_sessions/
+
+  noremap ; :
+  "nnoremap : Q
 
   " Resise buffer views up and down
   nnoremap + <c-w>+
@@ -176,6 +179,7 @@ function! DoPythonSettings()
   set foldmethod=indent
   set foldnestmax=6
   set foldlevelstart=20
+  map <buffer> <Space>e :!/usr/bin/env python % 
 endfunction
 autocmd! BufEnter *.py call DoPythonSettings()
 autocmd! BufEnter *.java call DoPythonSettings()
