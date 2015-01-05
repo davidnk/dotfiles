@@ -36,7 +36,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias ack='ack-grep -i'
 ack-vim() {
-  (/home/dkaresh/vack.py "$@") | vim -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
+  (~/vack.py "$@") | vim -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
 }
 alias vack=ack-vim
 alias g=ack-vim
