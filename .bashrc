@@ -86,13 +86,24 @@ export PS1='\w$ '
 
 if [ -f ~/.bashrc_local_stuff ]; then
     . ~/.bashrc_local_stuff
+
+    # Load mtime at bash start-up
+    export BASHRC_LOCAL_MTIME=$(stat -c "%Z" ~/.bashrc_local_stuff)
+    PROMPT_COMMAND="check_and_reload_bashrc_local; $PROMPT_COMMAND"
+    check_and_reload_bashrc_local () {
+      if [ "$(stat -c "%Z" ~/.bashrc_local_stuff)" != $BASHRC_LOCAL_MTIME ]; then
+        export BASHRC_LOCAL_MTIME="$(stat -c "%Z" ~/.bashrc_local_stuff)"
+        echo "bashrc_local_stuff changed. re-sourcing..." >&2
+        . ~/.bashrc
+      fi
+}
 fi
 
 # Load mtime at bash start-up
 #echo "bashrc mtime: $(stat -c "%Z" ~/.bashrc)" >&2
 export BASHRC_MTIME=$(stat -c "%Z" ~/.bashrc)
 
-PROMPT_COMMAND="check_and_reload_bashrc"
+PROMPT_COMMAND="check_and_reload_bashrc; $PROMPT_COMMAND"
 check_and_reload_bashrc () {
   if [ "$(stat -c "%Z" ~/.bashrc)" != $BASHRC_MTIME ]; then
     export BASHRC_MTIME="$(stat -c "%Z" ~/.bashrc)"
@@ -100,4 +111,3 @@ check_and_reload_bashrc () {
     . ~/.bashrc
   fi
 }
-

@@ -1,3 +1,5 @@
+map cn :cnext<CR>
+map cp :cprevious<CR>
 source ~/.vim/cscope_maps.vim
 
 " ':source ~/.vimrc' to reload
@@ -13,6 +15,8 @@ set expandtab                 " expand <Tab>s with spaces; death to
 set shiftround                " always round indents to multiple of
 "set mouse=a
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
+set undofile                  " undos persist after closing file
+set undodir=~/.vimundos
 set undolevels=1000           " 1000 undos
 set ignorecase                " search ignoring case
 set incsearch                 " incremental search
@@ -164,6 +168,8 @@ function! SetupVimMaps()
 
   " goto stuff under cursor
   nnoremap <Enter> :call GotoDef()<CR>
+  command! Scrap call ScratchBuffer()
+  command! Scratch call ScratchBuffer()
   "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_references.py <C-r>z<CR>
   nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_children.py <C-r>z<CR>
   "cscope_maps.vim for more maps
@@ -192,7 +198,8 @@ function! SetupVimPlugins()
   " ctrlp
   let g:ctrlp_max_files=0
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.jar
-  map go <c-p>
+  "map go <c-p>
+  map go :e **/
 
   "filetype plugin on
   "set shellslash
