@@ -125,6 +125,9 @@ function! SetupVimMaps()
   inoremap <c-l> <Esc>:w<CR>
   "inoremap jkl <Esc>:w<CR>
 
+  "Save with sudo if you forgot to open with sudo
+  cmap w!! w !sudo tee % >/dev/null
+
   " Use <Leader><Enter> in insert mode to start inserting on next line.
   inoremap <Leader><CR> <Esc>o
 
