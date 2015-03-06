@@ -119,6 +119,8 @@ function! SetupVimMaps()
   " Use jj as paste in insert mode
   inoremap jj <Esc>pa
 
+  inoremap jh <C-\><C-o>db
+
   "c-l to save
   nnoremap <c-l> :w<CR>
   "save and exit insert mode.  add 'a' at end to stay in insert
@@ -201,6 +203,12 @@ function! SetupVimPlugins()
   " ctrlp
   let g:ctrlp_max_files=0
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*.jar
+  if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+  endif
   "map go <c-p>
   map go :e **/
 

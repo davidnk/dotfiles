@@ -15,7 +15,7 @@ for word in sys.argv[1:]:
     print '-' * 80
     try:
         lines = subprocess.check_output(['ack-grep', '-i', '{}'.format(word)]).split('\n')
-        lines = [l for l in lines if re.search('[^\w]{}[^\w]'.format(word), l.lower() if word == word.lower() else l)]
+        lines = [l for l in lines if re.search('[^\w]{}([^\w]|$)'.format(word), l.lower() if word == word.lower() else l)]
 
         file_map = {filename(l): [] for l in lines}
         for l in lines:

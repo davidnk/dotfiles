@@ -19,6 +19,12 @@ EDITOR=vim; export EDITOR
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
