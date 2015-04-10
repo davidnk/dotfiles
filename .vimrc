@@ -15,6 +15,7 @@ set expandtab                 " expand <Tab>s with spaces; death to
 set shiftround                " always round indents to multiple of
 "set mouse=a
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
+set wildmenu
 set undofile                  " undos persist after closing file
 set undodir=~/.vimundos
 set undolevels=1000           " 1000 undos
