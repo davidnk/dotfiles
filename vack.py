@@ -21,7 +21,7 @@ for word in sys.argv[1:]:
         for l in lines:
             file_map[filename(l)].append(l.replace(filename(l) + ':', ''))
 
-        for k, v in file_map.items():
+        for k, v in sorted(file_map.items()):
             print k # file
             for l in v:
                 num, line = split_after_linenumber(l)
