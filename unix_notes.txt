@@ -54,3 +54,4 @@ To allow java gui's to work from awesomewm:
   see https://awesome.naquadah.org/wiki/Problems_with_Java
 
 https://github.com/Russell91/sshrc
+scm_breeze
