@@ -20,6 +20,7 @@ set undofile                  " undos persist after closing file
 set undodir=~/.vimundos
 set undolevels=1000           " 1000 undos
 set ignorecase                " search ignoring case
+set history=200
 set incsearch                 " incremental search
 set hlsearch
 set smartcase                 "unless you use uppercase
@@ -63,15 +64,13 @@ autocmd! InsertLeave * match ExtraWhiteSpace /\s\+$/
 " Open files to same line as last opened in vim
 " If it doesn't work try: sudo chown user:group ~/.viminfo
 "    with user and group often being your username
-autocmd! BufRead * if line("'\"") > 0 && line("'\"") <= line("$")
-      \| exe "normal! g`\"" | endif
+autocmd! BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
 " preserves cursor position between buffer changes
@@ -116,11 +115,15 @@ endfunction
 function! SetupVimMaps()
   " Use jk as <Esc>l in insert mode
   inoremap jk <Esc>l
+  inoremap kj <Esc>l
 
   " Use jj as paste in insert mode
   inoremap jj <Esc>pa
 
-  inoremap jh <C-\><C-o>db
+  inoremap jh <C-w>
+
+  " undo point after each space
+  "inoremap <Space> <Space><C-o><Esc>
 
   "c-l to save
   nnoremap <c-l> :w<CR>
@@ -156,17 +159,21 @@ function! SetupVimMaps()
   " wt moves window into tab
   nnoremap wt <C-w>T
   " t / T to change tabs
-  nnoremap t gt
-  nnoremap T gT
+  "nnoremap t gt
+  "nnoremap T gT
+  noremap <Space>h gT
+  noremap <Space>l gt
 
   " q
   nnoremap <Space>q :q<CR>
-  nnoremap Q :Obsession ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
+  nnoremap <Space><Space>q :Obsession ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
 
   nnoremap <Space>s :Obsession ~/.vim/vim_sessions/
 
-  noremap ; :
+  "noremap ; :
   "nnoremap : Q
+
+  noremap <Space>. @q
 
   " Resise buffer views up and down
   nnoremap + <c-w>+
@@ -242,13 +249,13 @@ function! SetupVimPlugins()
 
   " Settings for eclim
   " =====================
-  "inoremap <C-n> <C-x><C-u>
-  "nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
-  "let g:EclimJavaSearchSingleResult = 'tabnew'
+  inoremap <C-n> <C-x><C-u>
+  nnoremap <silent> <buffer> <Leader>d :JavaSearchContext<cr>
+  let g:EclimJavaSearchSingleResult = 'tabnew'
 
   " Settings for vim-easymotion
   " =====================
-  map f <Plug>(easymotion-s)
+  map <space>f <Plug>(easymotion-s)
   imap jf <C-o><Plug>(easymotion-s)
   let g:EasyMotion_smartcase = 1
   command! E Explore
