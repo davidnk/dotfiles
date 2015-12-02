@@ -63,7 +63,7 @@ _autocomplete_tmux_attach() {
 complete -F _autocomplete_tmux_attach ta
 
 vim-session() {
-  if [ -z "$1" ]; then
+  if [[ -z "$1" ]]; then
     ls -1 ~/.vim/vim_sessions/
   else
     vim -S ~/.vim/vim_sessions/$1*
@@ -84,21 +84,21 @@ alias index='sh ~/cscope_gen.sh && ctags -R .'
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
 export PS1='\w$ '
 
-if [ -f ~/.bashrc_local_stuff ]; then
+if [[ -f ~/.bashrc_local_stuff ]]; then
     . ~/.bashrc_local_stuff
 
     # Load mtime at bash start-up
-    export BASHRC_LOCAL_MTIME=$(stat -c "%Z" ~/.bashrc_local_stuff)
+    export BASHRC_LOCAL_MTIME=$(stat -c '%Z' ~/.bashrc_local_stuff)
     PROMPT_COMMAND="check_and_reload_bashrc_local; $PROMPT_COMMAND"
     check_and_reload_bashrc_local () {
-      if [ "$(stat -c "%Z" ~/.bashrc_local_stuff)" != $BASHRC_LOCAL_MTIME ]; then
-        export BASHRC_LOCAL_MTIME="$(stat -c "%Z" ~/.bashrc_local_stuff)"
+      if [[ "$(stat -c '%Z' ~/.bashrc_local_stuff)" != $BASHRC_LOCAL_MTIME ]]; then
+        export BASHRC_LOCAL_MTIME="$(stat -c '%Z' ~/.bashrc_local_stuff)"
         echo "bashrc_local_stuff changed. re-sourcing..." >&2
         . ~/.bashrc
       fi
@@ -106,13 +106,13 @@ if [ -f ~/.bashrc_local_stuff ]; then
 fi
 
 # Load mtime at bash start-up
-#echo "bashrc mtime: $(stat -c "%Z" ~/.bashrc)" >&2
-export BASHRC_MTIME=$(stat -c "%Z" ~/.bashrc)
+#echo "bashrc mtime: $(stat -c '%Z' ~/.bashrc)" >&2
+export BASHRC_MTIME=$(stat -c '%Z' ~/.bashrc)
 
 PROMPT_COMMAND="check_and_reload_bashrc; $PROMPT_COMMAND"
 check_and_reload_bashrc () {
-  if [ "$(stat -c "%Z" ~/.bashrc)" != $BASHRC_MTIME ]; then
-    export BASHRC_MTIME="$(stat -c "%Z" ~/.bashrc)"
+  if [[ "$(stat -c '%Z' ~/.bashrc)" != $BASHRC_MTIME ]]; then
+    export BASHRC_MTIME="$(stat -c '%Z' ~/.bashrc)"
     echo "bashrc changed. re-sourcing..." >&2
     . ~/.bashrc
   fi
