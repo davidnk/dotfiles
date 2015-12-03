@@ -1,3 +1,4 @@
+neovim - ~/.vimrc equivalent is ~/.config/nvim/init.vim
 http://www.8t8.us/vim/vim.html
 http://www.cmrr.umn.edu/~strupp/vim-3.0.refcard.html
 ideavim.sourceforge.net/vim/‎
