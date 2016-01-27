@@ -1,5 +1,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+. ~/.bashrc_local_stuff
 
 # append to the history file, don't overwrite it
 shopt -s histappend

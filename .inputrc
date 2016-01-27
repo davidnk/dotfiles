@@ -3,5 +3,11 @@ set editing-mode vi
 set keymap vi-command
 "H": beginning-of-line
 "L": end-of-line
+"\C-f": "/"
 set keymap vi-insert
 Control-l clear-screen
+"jk": vi-movement-mode
+"kj": vi-movement-mode
+"\C-k":history-search-backward
+"\C-j":history-search-forward
+"\C-f": "\e/"

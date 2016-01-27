@@ -3,7 +3,7 @@ map cp :cprevious<CR>
 source ~/.vim/cscope_maps.vim
 
 " ':source ~/.vimrc' to reload
-set nu
+set number
 set ruler
 set autoindent
 set smartindent
@@ -14,6 +14,7 @@ set smarttab
 set expandtab                 " expand <Tab>s with spaces; death to
 set shiftround                " always round indents to multiple of
 "set mouse=a
+set mouse=
 set complete=.,w,b,u,U,t,i,d  " do lots of scanning on tab completion
 set wildmenu
 set undofile                  " undos persist after closing file
@@ -34,10 +35,10 @@ set laststatus=2
 set t_Co=256                  " Bad in gvim
 set pastetoggle=<F2>
 set background=dark
-set ff=unix                   " Set line endings
+set fileformat=unix           " Set line endings
 "set scrolloff=5               " Min lines above/below the cursor
 set directory=/tmp            " Set directory for swp files
-set mps+=<:>
+set matchpairs+=<:>
 set relativenumber
 set number
 set clipboard=unnamedplus
@@ -56,20 +57,27 @@ highlight Search term=reverse cterm=reverse ctermbg=None ctermfg=blue
 
 " Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=lightgrey guibg=lightgrey
-autocmd! ColorScheme * highlight ExtraWhitespace guibg=lightgrey
-autocmd! BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd! InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd! InsertLeave * match ExtraWhiteSpace /\s\+$/
+augroup whitespace_highlighting
+  autocmd!
+  autocmd ColorScheme * highlight ExtraWhitespace guibg=lightgrey
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+augroup END
+
 
 " Open files to same line as last opened in vim
 " If it doesn't work try: sudo chown user:group ~/.viminfo
 "    with user and group often being your username
-autocmd! BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup reopen
+  autocmd!
+  autocmd BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
-if !exists(":DiffOrig")
+if !exists(':DiffOrig')
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
@@ -87,7 +95,7 @@ function! ScratchBuffer()
 endfunction
 
 function! GotoDef()
-  let curent_filename = expand('%:p')
+  let l:curent_filename = expand('%:p')
   set nocscopetag
   try
     try
@@ -103,12 +111,12 @@ function! GotoDef()
     endtry
   catch
   endtry
-  if curent_filename != expand('%:p')
+  if l:curent_filename != expand('%:p')
     "b #
     "tab split
     "b #
   endif
-  unlet curent_filename
+  unlet l:curent_filename
   set cscopetag
 endfunction
 
@@ -169,6 +177,7 @@ function! SetupVimMaps()
   nnoremap <Space><Space>q :Obsession ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
 
   nnoremap <Space>s :Obsession ~/.vim/vim_sessions/
+  nnoremap <Space><Space>s :Obsession ~/.vim/vim_sessions/
 
   "noremap ; :
   "nnoremap : Q
@@ -198,10 +207,13 @@ function! DoPythonSettings()
   set foldmethod=indent
   set foldnestmax=6
   set foldlevelstart=20
-  map <buffer> <Space>e :!/usr/bin/env python % 
+  map <buffer> <Space>e :!/usr/bin/env python %
 endfunction
-autocmd! BufEnter *.py call DoPythonSettings()
-autocmd! BufEnter *.java call DoPythonSettings()
+augroup lang_settings
+  autocmd!
+  autocmd BufEnter *.py call DoPythonSettings()
+  autocmd BufEnter *.java call DoPythonSettings()
+augroup END
 
 function! SetupVimPlugins()
   " pathogen
@@ -237,15 +249,15 @@ function! SetupVimPlugins()
 
   " Settings for jedi-vim
   " =====================
-  let g:jedi#goto_assignments_command = "<leader>g"
-  let g:jedi#goto_definitions_command = "<leader>d"
-  let g:jedi#documentation_command = "<leader>k"
-  let g:jedi#usages_command = "<leader>n"
-  let g:jedi#completions_command = "<C-Space>"
-  let g:jedi#rename_command = "<leader>r"
+  let g:jedi#goto_assignments_command = '<leader>g'
+  let g:jedi#goto_definitions_command = '<leader>d'
+  let g:jedi#documentation_command = '<leader>k'
+  let g:jedi#usages_command = '<leader>n'
+  let g:jedi#completions_command = '<C-Space>'
+  let g:jedi#rename_command = '<leader>r'
   let g:jedi#popup_on_dot = 0
   let g:jedi#popup_select_first = 0
-  let g:jedi#use_splits_not_buffers = "left"
+  let g:jedi#use_splits_not_buffers = 'left'
 
   " Settings for eclim
   " =====================
@@ -259,6 +271,14 @@ function! SetupVimPlugins()
   imap jf <C-o><Plug>(easymotion-s)
   let g:EasyMotion_smartcase = 1
   command! E Explore
+
+  " NeoMake settings
+  " =====================
+  augroup neomake_group
+    autocmd!
+    autocmd BufWritePost * Neomake
+  augroup END
+
 endfunction
 call SetupVimPlugins()
 
@@ -269,15 +289,15 @@ call SetupVimPlugins()
 "
 " The local configuration file is expected to have commands affecting
 " only the current buffer.
-function SetLocalOptions(fname)
-	let dirname = fnamemodify(a:fname, ":p:h")
-	while "/" != dirname
-		let lvimrc  = dirname . "/.lvimrc"
-		if filereadable(lvimrc)
-			execute "source " . lvimrc
+function! SetLocalOptions(fname)
+	let l:dirname = fnamemodify(a:fname, ':p:h')
+	while '/' !=# l:dirname
+		let l:lvimrc  = l:dirname . '/.lvimrc'
+		if filereadable(l:lvimrc)
+			execute 'source ' . l:lvimrc
 			break
 		endif
-		let dirname = fnamemodify(dirname, ":p:h:h")
+		let l:dirname = fnamemodify(l:dirname, ':p:h:h')
 	endwhile
 endfunction
-au BufNewFile,BufRead * call SetLocalOptions(bufname("%"))
+autocmd! BufNewFile,BufRead * call SetLocalOptions(bufname("%"))
