@@ -1,0 +1,14 @@
+sudo pip install neovim
+:PlugInstall
+
+sudo pip install jedi flake8 nose vim_bridge mock
+sudo aptitude install mercurial
+sudo pip install -e "hg+https://code.google.com/p/nose-machineout/#egg=nose-machineout"
+
+
+Details:
+
+jedi-vim:  pip install jedi
+vim-flake8:  pip install flake8
+vim-pyunit:  pip install nose vim_bridge mock
+              install nose_machineout
