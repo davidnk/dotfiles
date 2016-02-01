@@ -230,6 +230,9 @@ function! SetupVimPlugins()
   Plug 'hynek/vim-python-pep8-indent'
   Plug 'davidhalter/jedi-vim'
   Plug 'rodjek/vim-puppet'
+  Plug 'janko-m/vim-test'
+  Plug 'dhruvasagar/vim-table-mode'
+  Plug 'airblade/vim-gitgutter'
   call plug#end()
 
 
@@ -269,6 +272,11 @@ function! SetupVimPlugins()
     autocmd BufWritePost * Neomake
   augroup END
 
+  " vim-test settings
+  " =====================
+  let g:test#strategy = 'neovim'
+  let g:test#python#runner = 'pytest'
+  nnoremap <Space>j :TestSuite<CR>
 endfunction
 call SetupVimPlugins()
 
