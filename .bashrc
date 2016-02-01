@@ -2,6 +2,8 @@
 [ -z "$PS1" ] && return
 . ~/.bashrc_local_stuff
 
+export BASHRC_PATH=$(readlink -m ~/.bashrc)
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -101,20 +103,20 @@ if [ -f ~/.bashrc_local_stuff ]; then
       if [ "$(stat -c "%Z" ~/.bashrc_local_stuff)" != $BASHRC_LOCAL_MTIME ]; then
         export BASHRC_LOCAL_MTIME="$(stat -c "%Z" ~/.bashrc_local_stuff)"
         echo "bashrc_local_stuff changed. re-sourcing..." >&2
-        . ~/.bashrc
+        . $BASHRC_PATH
       fi
 }
 fi
 
 # Load mtime at bash start-up
 #echo "bashrc mtime: $(stat -c "%Z" ~/.bashrc)" >&2
-export BASHRC_MTIME=$(stat -c "%Z" ~/.bashrc)
+export BASHRC_MTIME=$(stat -c "%Z" $BASHRC_PATH)
 
 PROMPT_COMMAND="check_and_reload_bashrc; $PROMPT_COMMAND"
 check_and_reload_bashrc () {
-  if [ "$(stat -c "%Z" ~/.bashrc)" != $BASHRC_MTIME ]; then
-    export BASHRC_MTIME="$(stat -c "%Z" ~/.bashrc)"
+  if [ "$(stat -c "%Z" $BASHRC_PATH)" != $BASHRC_MTIME ]; then
+    export BASHRC_MTIME="$(stat -c "%Z" $BASHRC_PATH)"
     echo "bashrc changed. re-sourcing..." >&2
-    . ~/.bashrc
+    . $BASHRC_PATH
   fi
 }
