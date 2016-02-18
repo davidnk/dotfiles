@@ -55,3 +55,6 @@ To allow java gui's to work from awesomewm:
 
 https://github.com/Russell91/sshrc
 scm_breeze
+
+https://github.com/junegunn/mvmv
+Easy file renaming

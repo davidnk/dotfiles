@@ -121,6 +121,8 @@ function! GotoDef()
 endfunction
 
 function! SetupVimMaps()
+  nnoremap Y y$
+
   " Use jk as <Esc>l in insert mode
   inoremap jk <Esc>l
   inoremap kj <Esc>l
@@ -209,7 +211,6 @@ function! DoPythonSettings()
   set foldmethod=indent
   set foldnestmax=6
   set foldlevelstart=20
-  map <buffer> <Space>e :!/usr/bin/env python %
 endfunction
 augroup lang_settings
   autocmd!
@@ -232,15 +233,12 @@ function! SetupVimPlugins()
   Plug 'rodjek/vim-puppet'
   Plug 'janko-m/vim-test'
   Plug 'dhruvasagar/vim-table-mode'
-  Plug 'airblade/vim-gitgutter'
+  Plug 'airblade/vim-gitgutter' "\hs to stage hunk    [c ]c to move between hunks     Breaks :tab split
+  Plug 'scrooloose/nerdtree'
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'artur-shaik/vim-javacomplete2', { 'tag': 'v2.3.3', 'for': 'java' }
+  "Plug 'zchee/deoplete-jedi'
   call plug#end()
-
-
-  "filetype plugin on
-  "set shellslash
-  "set grepprg=grep\ -nH\ $*
-  "filetype indent on
-  "let g:tex_flavor='latex'
 
   " vim-python-pep8-indent
   " =====================
@@ -252,11 +250,27 @@ function! SetupVimPlugins()
   let g:jedi#goto_definitions_command = '<leader>d'
   let g:jedi#documentation_command = '<leader>k'
   let g:jedi#usages_command = '<leader>n'
-  let g:jedi#completions_command = '<C-Space>'
+  "let g:jedi#completions_command = '<C-Space>'
   let g:jedi#rename_command = '<leader>r'
-  let g:jedi#popup_on_dot = 0
-  let g:jedi#popup_select_first = 0
+  "let g:jedi#popup_on_dot = 0
+  "let g:jedi#popup_select_first = 0
   let g:jedi#use_splits_not_buffers = 'left'
+  set completeopt+=longest,menuone
+
+  " Settings for supertab
+  " =====================
+  let g:SuperTabDefaultCompletionType = "<c-n>"
+
+  " NerdTree
+  map <Space>e :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+  map <Space><Space>e :NERDTreeFind<CR>
+  let NERDTreeShowBookmarks=1
+  let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+  let NERDTreeChDirMode=0
+  let NERDTreeQuitOnOpen=1
+  let NERDTreeShowHidden=1
+  let NERDTreeKeepTreeInNewTab=1
+  let g:nerdtree_tabs_open_on_gui_startup=0
 
   " Settings for vim-easymotion
   " =====================
@@ -269,7 +283,7 @@ function! SetupVimPlugins()
   " =====================
   augroup neomake_group
     autocmd!
-    autocmd BufWritePost * Neomake
+    autocmd BufWritePost *.py Neomake
   augroup END
 
   " vim-test settings
@@ -279,6 +293,8 @@ function! SetupVimPlugins()
   nnoremap <Space>j :TestSuite<CR>
 endfunction
 call SetupVimPlugins()
+inoremap <NUL> <C-x><C-o>
+inoremap <C-j> <C-x><C-o>
 
 " http://www.vim.org/scripts/script.php?script_id=1408
 " Set directory-wise configuration.
@@ -288,14 +304,14 @@ call SetupVimPlugins()
 " The local configuration file is expected to have commands affecting
 " only the current buffer.
 function! SetLocalOptions(fname)
-	let l:dirname = fnamemodify(a:fname, ':p:h')
-	while '/' !=# l:dirname
-		let l:lvimrc  = l:dirname . '/.lvimrc'
-		if filereadable(l:lvimrc)
-			execute 'source ' . l:lvimrc
-			break
-		endif
-		let l:dirname = fnamemodify(l:dirname, ':p:h:h')
-	endwhile
+  let l:dirname = fnamemodify(a:fname, ':p:h')
+  while '/' !=# l:dirname
+    let l:lvimrc  = l:dirname . '/.lvimrc'
+    if filereadable(l:lvimrc)
+      execute 'source ' . l:lvimrc
+      break
+    endif
+    let l:dirname = fnamemodify(l:dirname, ':p:h:h')
+  endwhile
 endfunction
 autocmd! BufNewFile,BufRead * call SetLocalOptions(bufname("%"))
