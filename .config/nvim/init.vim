@@ -135,11 +135,10 @@ function! SetupVimMaps()
   " undo point after each space
   "inoremap <Space> <Space><C-o><Esc>
 
-  "c-l to save
-  nnoremap <c-l> :w<CR>
+  "c-s to save
+  nnoremap <c-s> :w<CR>
   "save and exit insert mode.  add 'a' at end to stay in insert
-  inoremap <c-l> <Esc>:w<CR>
-  "inoremap jkl <Esc>:w<CR>
+  inoremap <c-s> <Esc>:w<CR>
 
   "Save with sudo if you forgot to open with sudo
   cmap w!! w !sudo tee % >/dev/null
@@ -151,8 +150,8 @@ function! SetupVimMaps()
   noremap J <PAGEDOWN>
   noremap K <PAGEUP>
   " H, L to Home, End
-  noremap H 0
-  noremap L $
+  "noremap H 0
+  "noremap L $
   " Graphical left/right
   noremap gh g0
   noremap gl g$

@@ -57,6 +57,7 @@ alias f=find-vim
 
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t "$@"'
+alias tad='tmux attach -dt "$@"'
 _autocomplete_tmux_attach() {
     local cur opts
     cur="${COMP_WORDS[COMP_CWORD]}"
