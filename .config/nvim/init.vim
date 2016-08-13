@@ -44,12 +44,16 @@ set number
 set clipboard=unnamedplus
 set tags=./tags;
 set ttimeout timeoutlen=300 ttimeoutlen=100  "1/3 second between keys
+set cursorline  " highlight current line
+set cursorcolumn  " highlight current column
 filetype plugin indent on
 syntax on
 highlight Folded term=standout ctermfg=none ctermbg=black
 highlight StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
 highlight Visual term=reverse cterm=reverse guibg=Grey
 highlight Search term=reverse cterm=reverse ctermbg=None ctermfg=blue
+highlight CursorLine cterm=None ctermbg=black
+highlight CursorColumn cterm=None ctermbg=black
 
 " Highlight lines longer than 80 chars
 "autocmd! BufWinEnter *.php,*.cpp,*.c,*.h,*.java,*.lua,*.js,TARGETS let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
@@ -159,10 +163,15 @@ function! SetupVimMaps()
   noremap go :e **/
 
   " folding
+  nnoremap za za:syntax sync fromstart<CR>
   nnoremap <Space><Space> za
 
   " windows
   nnoremap w <C-w>
+  nnoremap <A-h> <C-w>h
+  nnoremap <A-j> <C-w>j
+  nnoremap <A-k> <C-w>k
+  nnoremap <A-l> <C-w>l
 
   " tabs
   nnoremap <Space>t :tab split<CR>
