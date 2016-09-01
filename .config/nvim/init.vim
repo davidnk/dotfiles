@@ -246,6 +246,8 @@ function! SetupVimPlugins()
   "Plug 'Shougo/deoplete.nvim'
   "Plug 'artur-shaik/vim-javacomplete2', { 'tag': 'v2.3.3', 'for': 'java' }
   "Plug 'zchee/deoplete-jedi'
+  Plug 'tmux-plugins/vim-tmux-focus-events'
+  Plug 'roxma/vim-tmux-clipboard'
   call plug#end()
 
   " vim-python-pep8-indent
