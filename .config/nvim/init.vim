@@ -48,6 +48,7 @@ set cursorline  " highlight current line
 set cursorcolumn  " highlight current column
 filetype plugin indent on
 syntax on
+colorscheme desert
 highlight Folded term=standout ctermfg=none ctermbg=black
 highlight StatusLine term=underline ctermbg=darkgrey ctermfg=lightgrey
 highlight Visual term=reverse cterm=reverse guibg=Grey
@@ -204,9 +205,12 @@ function! SetupVimMaps()
   nnoremap <Enter> :call GotoDef()<CR>
   command! Scrap call ScratchBuffer()
   command! Scratch call ScratchBuffer()
-  "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !python ~/.config/nvim/vim_helpers/get_references.py <C-r>z<CR>
+  "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !~/.config/nvim/vim_helpers/get_references.py <C-r>z<CR>
   nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !~/.config/nvim/vim_helpers/get_children.py <C-r>z<CR>
   "cscope_maps.vim for more maps
+
+  " Set mapping for <C-o> to exit terminal emulation to normal mode
+  tnoremap <C-o> <C-\><C-n>
 endfunction
 call SetupVimMaps()
 
@@ -243,14 +247,15 @@ function! SetupVimPlugins()
   Plug 'dhruvasagar/vim-table-mode'
   Plug 'airblade/vim-gitgutter' "\hs to stage hunk    [c ]c to move between hunks     Breaks :tab split
   Plug 'scrooloose/nerdtree'
-  "Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
   "Plug 'artur-shaik/vim-javacomplete2', { 'tag': 'v2.3.3', 'for': 'java' }
   "Plug 'zchee/deoplete-jedi'
   Plug 'tmux-plugins/vim-tmux-focus-events'
   Plug 'roxma/vim-tmux-clipboard'
   Plug 'majutsushi/tagbar'
   Plug 'craigemery/vim-autotag'
-  Plug 'Shougo/denite.nvim' " better version of unite<Paste>
+  Plug 'Shougo/denite.nvim' " better version of unite
   call plug#end()
 
   " tagbar
@@ -262,9 +267,9 @@ function! SetupVimPlugins()
   let g:pymode_indent = 0
 
   " Settings for Shougo/deoplete.nvim
-	" =====================
-	" see github page for initial setup
-	"let g:deoplete#enable_at_startup = 1
+  " =====================
+  " see github page for initial setup
+  "let g:deoplete#enable_at_startup = 1
 
   " Settings for jedi-vim
   " =====================
