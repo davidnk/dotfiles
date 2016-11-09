@@ -1,8 +1,11 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-. ~/.bashrc_local_stuff
 
-export BASHRC_PATH=$(readlink -m ~/.bashrc)
+export VIM_HOME=$HOME/.config/nvim
+export BASHRC_PATH=$HOME/.bashrc
+export BASHRC_LOCAL_PATH=$HOME/.bashrc_local_stuff
+
+. $BASHRC_LOCAL_PATH
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -45,7 +48,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias ack='ack-grep -i'
 ack-vim() {
-  (~/vack.py "$@") | vim -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
+  (vack.py "$@") | vim -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
 }
 alias vack=ack-vim
 alias g=ack-vim
@@ -68,22 +71,22 @@ complete -F _autocomplete_tmux_attach ta
 
 vim-session() {
   if [ -z "$1" ]; then
-    ls -1 ~/.vim/vim_sessions/
+    ls -1 $VIM_HOME/vim_sessions/
   else
-    vim -S ~/.vim/vim_sessions/$1*
+    vim -S $VIM_HOME/vim_sessions/$1*
   fi
 }
 _autocomplete_vim_session() {
     local cur opts
     cur="${COMP_WORDS[COMP_CWORD]}"
-    opts=$(ls -1 ~/.vim/vim_sessions/ | awk '{print $1}' | sed 's/://g' | xargs)
+    opts=$(ls -1 $VIM_HOME/vim_sessions/ | awk '{print $1}' | sed 's/://g' | xargs)
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
 }
 complete -F _autocomplete_vim_session vim-session
 alias v=vim-session
 complete -F _autocomplete_vim_session v
 
-alias index='sh ~/cscope_gen.sh && ctags -R .'
+alias index='cscope_gen.sh && ctags -R .'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -94,15 +97,15 @@ fi
 
 export PS1='\w$ '
 
-if [ -f ~/.bashrc_local_stuff ]; then
-    . ~/.bashrc_local_stuff
+if [ -f $BASHRC_LOCAL_PATH ]; then
+    . $BASHRC_LOCAL_PATH
 
     # Load mtime at bash start-up
-    export BASHRC_LOCAL_MTIME=$(stat -c "%Z" ~/.bashrc_local_stuff)
+    export BASHRC_LOCAL_MTIME=$(stat -c "%Z" $BASHRC_LOCAL_PATH)
     PROMPT_COMMAND="check_and_reload_bashrc_local; $PROMPT_COMMAND"
     check_and_reload_bashrc_local () {
-      if [ "$(stat -c "%Z" ~/.bashrc_local_stuff)" != $BASHRC_LOCAL_MTIME ]; then
-        export BASHRC_LOCAL_MTIME="$(stat -c "%Z" ~/.bashrc_local_stuff)"
+      if [ "$(stat -c "%Z" $BASHRC_LOCAL_PATH)" != $BASHRC_LOCAL_MTIME ]; then
+        export BASHRC_LOCAL_MTIME="$(stat -c "%Z" $BASHRC_LOCAL_PATH)"
         echo "bashrc_local_stuff changed. re-sourcing..." >&2
         . $BASHRC_PATH
       fi
@@ -110,7 +113,7 @@ if [ -f ~/.bashrc_local_stuff ]; then
 fi
 
 # Load mtime at bash start-up
-#echo "bashrc mtime: $(stat -c "%Z" ~/.bashrc)" >&2
+#echo "bashrc mtime: $(stat -c "%Z" $HOME/.bashrc)" >&2
 export BASHRC_MTIME=$(stat -c "%Z" $BASHRC_PATH)
 
 PROMPT_COMMAND="check_and_reload_bashrc; $PROMPT_COMMAND"

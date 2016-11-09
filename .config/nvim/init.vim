@@ -186,10 +186,10 @@ function! SetupVimMaps()
 
   " q
   nnoremap <Space>q :q<CR>
-  nnoremap <Space><Space>q :Obsession ~/.vim/vim_sessions/prev_closed.vim<CR>:qa<CR>
+  nnoremap <Space><Space>q :Obsession ~/.config/nvim/vim_sessions/prev_closed.vim<CR>:qa<CR>
 
-  nnoremap <Space>s :Obsession ~/.vim/vim_sessions/
-  nnoremap <Space><Space>s :Obsession ~/.vim/vim_sessions/
+  nnoremap <Space>s :Obsession ~/.config/nvim/vim_sessions/
+  nnoremap <Space><Space>s :Obsession ~/.config/nvim/vim_sessions/
 
   "noremap ; :
   "nnoremap : Q
@@ -204,8 +204,8 @@ function! SetupVimMaps()
   nnoremap <Enter> :call GotoDef()<CR>
   command! Scrap call ScratchBuffer()
   command! Scratch call ScratchBuffer()
-  "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_references.py <C-r>z<CR>
-  nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !python ~/.vim/vim_helpers/get_children.py <C-r>z<CR>
+  "nnoremap <Space>gr "zyiw:call ScratchBuffer()<CR>:read !python ~/.config/nvim/vim_helpers/get_references.py <C-r>z<CR>
+  nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !~/.config/nvim/vim_helpers/get_children.py <C-r>z<CR>
   "cscope_maps.vim for more maps
 endfunction
 call SetupVimMaps()
@@ -248,11 +248,23 @@ function! SetupVimPlugins()
   "Plug 'zchee/deoplete-jedi'
   Plug 'tmux-plugins/vim-tmux-focus-events'
   Plug 'roxma/vim-tmux-clipboard'
+  Plug 'majutsushi/tagbar'
+  Plug 'craigemery/vim-autotag'
+  Plug 'Shougo/denite.nvim' " better version of unite<Paste>
   call plug#end()
+
+  " tagbar
+  " =====================
+  nmap <F8> :TagbarToggle<CR>
 
   " vim-python-pep8-indent
   " =====================
   let g:pymode_indent = 0
+
+  " Settings for Shougo/deoplete.nvim
+	" =====================
+	" see github page for initial setup
+	"let g:deoplete#enable_at_startup = 1
 
   " Settings for jedi-vim
   " =====================

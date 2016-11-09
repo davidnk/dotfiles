@@ -12,3 +12,7 @@ jedi-vim:  pip install jedi
 vim-flake8:  pip install flake8
 vim-pyunit:  pip install nose vim_bridge mock
               install nose_machineout
+
+
+for completion in bash of recent files:
+https://github.com/haifengkao/nfasd
