@@ -49,11 +49,13 @@ alias egrep='egrep --color=auto'
 alias ack='ack-grep -i'
 ack-vim() {
   (vack.py "$@") | vim -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
+  echo
 }
 alias vack=ack-vim
 alias g=ack-vim
 find-vim() {
   find . | grep -i "$@" | vim -c /"$@" -c ":setlocal buftype=nofile" -c ":setlocal bufhidden=hide" -c ":setlocal noswapfile" -
+  echo
 }
 alias vfind=find-vim
 alias f=find-vim
