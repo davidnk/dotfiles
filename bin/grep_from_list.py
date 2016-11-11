@@ -3,7 +3,7 @@ import sys
 import re
 import os
 
-keys_re = re.compile('^,[a-zA-Z0-9_.]+$')
+keys_re = re.compile('^,[a-zA-Z0-9_./]+$')
 def is_key(arg):
     return keys_re.match(arg) is not None
 
@@ -35,7 +35,7 @@ def new_key(fnames, output, cache_dir='/tmp/a'):
 def filter_files(keys, filters, nots, cache_dir='/tmp/a'):
     def get_cached_files(key):
         with open(os.path.join(cache_dir, key)) as f:
-            return set(fname.strip() for fname in f.readlines())
+            return set(fname.strip() for fname in f.readlines() if os.path.isfile(fname.strip()))
     if not os.path.isdir(cache_dir):
         os.mkdir(cache_dir)
     files = set()
@@ -85,6 +85,7 @@ If OUTPUT is '.' the list of files is printed.
 def main(keys, filters, nots, output):
     if output == '.':
         print '\n'.join(filter_files(keys, filters, nots))
+        return
     if not is_key(output) and not is_filter(output):
         sys.exit(help_message)
     fnames = filter_files(keys, filters, nots)

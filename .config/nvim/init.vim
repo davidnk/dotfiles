@@ -209,6 +209,9 @@ function! SetupVimMaps()
   nnoremap <Space>gc "zyiw:call ScratchBuffer()<CR>:read !~/.config/nvim/vim_helpers/get_children.py <C-r>z<CR>
   "cscope_maps.vim for more maps
 
+  " search into scrap
+  nnoremap <C-f> "zyiw:call ScratchBuffer()<CR>:read !ls /tmp/a<CR>:read !grep_from_list.py<Space>
+
   " Set mapping for <C-o> to exit terminal emulation to normal mode
   tnoremap <C-o> <C-\><C-n>
 endfunction
@@ -251,8 +254,8 @@ function! SetupVimPlugins()
   "Plug 'vhakulinen/neovim-intellij-complete-deoplete'
   "Plug 'artur-shaik/vim-javacomplete2', { 'tag': 'v2.3.3', 'for': 'java' }
   "Plug 'zchee/deoplete-jedi'
-  Plug 'tmux-plugins/vim-tmux-focus-events'
-  Plug 'roxma/vim-tmux-clipboard'
+  "Plug 'tmux-plugins/vim-tmux-focus-events'
+  "Plug 'roxma/vim-tmux-clipboard'
   Plug 'majutsushi/tagbar'
   Plug 'craigemery/vim-autotag'
   Plug 'Shougo/denite.nvim' " better version of unite
